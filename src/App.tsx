@@ -205,7 +205,7 @@ const App = () => {
           }}
         >
           <div className="mb-12 flex flex-row items-center gap-10">
-            <img src="/AppleMusicHeading.png" alt="AppleMusicHeading" className="h-40 md:h-60" />
+            <img src="/lyrics-guessing-game/AppleMusicHeading.png" alt="AppleMusicHeading" className="h-40 md:h-60" />
             <div className="font-apple flex h-[240px] w-full flex-col justify-between">
               <div className="flex h-full flex-col justify-center">
                 <h1 className="text-apple-text-main text-3xl font-semibold md:text-5xl">Guess the 2010's Song</h1>
@@ -370,7 +370,11 @@ const App = () => {
             'right-3': !isSheetOpen,
           })}
         >
-          <img src="/LyricIcon.png" alt="Lyrics" className={cn('hover:bg-apple-bg-hover size-10 rounded p-2')} />
+          <img
+            src="/lyrics-guessing-game/LyricIcon.png"
+            alt="Lyrics"
+            className={cn('hover:bg-apple-bg-hover size-10 rounded p-2')}
+          />
         </button>
         <div
           className={cn(
