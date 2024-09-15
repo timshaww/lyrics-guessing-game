@@ -30,12 +30,10 @@ const App = () => {
   const NUM_LYRICS = 6;
   const NUM_GUESSES = 6;
 
-  // states for styling the sheet
   const [isSheetOpen, setIsSheetOpen] = useState(true);
   const [isCelebrating, setIsCelebrating] = useState(false);
-  const [isInputFocused, setIsInputFocused] = useState(true);
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
-  // States for the game
   const [correctSongs, setCorrectSongs] = useState<string[]>([]);
   const [correctLyrics, setCorrectLyrics] = useState<LyricsIndex>({ lyrics: [], index: -1 });
   const [guess, setGuess] = useState<StringIndex>({ string: '', index: 0 });
@@ -136,11 +134,11 @@ const App = () => {
       {/* Main content that will shrink when the sheet opens */}
       <div
         className={cn('px-24 pt-48 transition-all duration-300 ease-in-out', {
-          'w-full': !isSheetOpen, // Full width when sheet is closed
-          'w-[calc(100%-300px)]': isSheetOpen, // Shrink width when sheet is open
+          'w-full': !isSheetOpen,
+          'w-[calc(100%-300px)]': isSheetOpen,
         })}
       >
-        <div className="bg-apple-bg-main max-w-screen-3xl h-full">
+        <div className="bg-apple-bg-main max-w-screen-3xl no-scrollbar h-full">
           <div className="mb-12 flex flex-row items-center gap-10">
             <img src="/AppleMusicHeading.png" alt="AppleMusicHeading" className="h-40 md:h-60" />
             <div className="font-apple flex h-[240px] w-full flex-col justify-between">
@@ -189,7 +187,7 @@ const App = () => {
                   />
                   <div
                     className={cn(
-                      'border-apple-bg-hover absolute top-10 max-h-64 w-full overflow-auto rounded border bg-white duration-100',
+                      'border-apple-bg-hover no-scrollbar absolute top-10 max-h-64 w-full overflow-auto rounded border bg-white duration-100',
                       {
                         hidden: !isInputFocused,
                         'flex flex-col items-start justify-start': isInputFocused,
@@ -216,31 +214,21 @@ const App = () => {
                           </div>
                         </div>
                       ))}
-                    <div
-                      className={`flex w-full items-center p-2 ${
-                        songs.length % 2 === 0 ? 'bg-apple-bg-main' : 'bg-apple-bg-accent'
-                      }`}
-                      onClick={() => {
-                        setIsInputFocused(false);
-                      }}
-                    >
-                      <p className="text-apple-text-accent text-sm">No Results. </p>
-                    </div>
+                    {songs.filter((song) => song.artist.toLowerCase().includes(guess.string.toLowerCase())).length ===
+                      0 && (
+                      <div
+                        className={`flex w-full items-center p-2 ${
+                          songs.length % 2 === 0 ? 'bg-apple-bg-main' : 'bg-apple-bg-accent'
+                        }`}
+                        onClick={() => {
+                          setIsInputFocused(false);
+                        }}
+                      >
+                        <p className="text-apple-text-accent text-sm">No Results. </p>
+                      </div>
+                    )}
                   </div>
                 </div>
-
-                {/* <input
-                  type="text"
-                  className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple w-full rounded-md border border-opacity-50 px-1 outline-none"
-                  value={guess.string}
-                  onChange={(event) => setGuess({ string: event.target.value, index: guess.index })}
-                  onKeyDown={(event) => {
-                    if (event.key === 'Enter') {
-                      handleGuess();
-                    }
-                  }}
-                  disabled={correctLyrics.index === -1}
-                /> */}
                 <button
                   className="text-apple-text-main absolute right-[5px] flex h-full flex-row items-center gap-2 rounded-md"
                   onClick={handleGuess}
@@ -257,8 +245,8 @@ const App = () => {
       {/* Sheet that opens and shifts content */}
       <div
         className={cn('bg-apple-bg-lyrics border-apple-bg-hover border-l transition-all duration-300 ease-in-out', {
-          'w-[300px]': isSheetOpen, // Width of the sheet when open
-          'w-0': !isSheetOpen, // No width when sheet is closed
+          'w-[300px]': isSheetOpen,
+          'w-0': !isSheetOpen,
         })}
         id="Sheet"
       >
