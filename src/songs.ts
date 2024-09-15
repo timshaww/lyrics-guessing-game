@@ -9,7 +9,7 @@ type Song = {
 
 export const songs: Song[] = [
     {
-        cover: "/UptownFunk.png",
+        cover: "UptownFunk.png",
         title: "Uptown Funk",
         artist: "Mark Ronson (feat. Bruno Mars)",
         album: "Uptown Special",
@@ -78,7 +78,7 @@ export const songs: Song[] = [
         ]
     },
     {
-        cover: '/PartyRockAnthem.png',
+        cover: 'PartyRockAnthem.png',
         title: 'Party Rock Anthem',
         artist: 'LMFAO',
         album: 'Sorry for Party Rocking',
@@ -152,7 +152,7 @@ export const songs: Song[] = [
         ]
     },
     {
-        cover: '/ShapeOfYou.png',
+        cover: 'ShapeOfYou.png',
         title: 'Shape of You',
         artist: 'Ed Sheeran',
         album: 'Divide',
@@ -201,7 +201,7 @@ export const songs: Song[] = [
         ]
     },
     {
-        cover: '/Closer.png',
+        cover: 'Closer.png',
         title: 'Closer',
         artist: 'The Chainsmokers (feat. Halsey)',
         album: 'Collage',
@@ -250,7 +250,7 @@ export const songs: Song[] = [
         ]
     },
     {
-        cover: '/GirlsLikeYou.png',
+        cover: 'GirlsLikeYou.png',
         title: 'Girls Like You',
         artist: 'Maroon 5 (feat. Cardi B)',
         album: 'Red Pill Blues',
@@ -323,7 +323,7 @@ export const songs: Song[] = [
             "I need a girl like you"]
     },
     {
-        cover: '/WeFoundLove.png',
+        cover: 'WeFoundLove.png',
         title: 'We Found Love',
         artist: 'Rihanna (feat. Calvin Harris)',
         album: 'Talk That Talk',
@@ -364,7 +364,7 @@ export const songs: Song[] = [
         ]
     },
     {
-        cover: '/OldTownRoad.png',
+        cover: 'OldTownRoad.png',
         title: 'Old Town Road',
         artist: 'Lil Nas X (feat. Billy Ray Cyrus)',
         album: '7 EP',
@@ -405,7 +405,7 @@ export const songs: Song[] = [
             "I got the"]
     },
     {
-        cover: '/SomebodyThatIUsedToKnow.png',
+        cover: 'SomebodyThatIUsedToKnow.png',
         title: 'Somebody That I Used To Know',
         artist: 'Gotye (feat. Kimbra)',
         album: 'Making Mirrors',
@@ -465,7 +465,7 @@ export const songs: Song[] = [
             "Somebody..."]
     },
     {
-        cover: '/Despacito.png',
+        cover: 'Despacito.png',
         title: 'Despacito',
         artist: 'Luis Fonsi & Daddy Yankee (feat. Justin Bieber)',
         album: 'Despacito – Single',
@@ -537,7 +537,7 @@ export const songs: Song[] = [
             "To the beat"]
     },
     {
-        cover: '/Sunflower.png',
+        cover: 'Sunflower.png',
         title: 'Sunflower',
         artist: 'Post Malone & Swae Lee',
         album: 'Spider-Man: Into the Spider-Verse',
@@ -579,7 +579,7 @@ export const songs: Song[] = [
             "You're the sunflower, you're the sunflower, yeah"]
     },
     {
-        cover: '/WithoutMe.png',
+        cover: 'WithoutMe.png',
         title: 'Without Me',
         artist: 'Halsey',
         album: 'Manic',
@@ -645,7 +645,7 @@ export const songs: Song[] = [
             "I don't know why (I don't know why)"]
     },
     {
-        cover: '/CallMeMaybe.png',
+        cover: 'CallMeMaybe.png',
         title: 'Call Me Maybe',
         artist: 'Carly Rae Jepsen',
         album: 'Kiss',
@@ -736,7 +736,7 @@ export const songs: Song[] = [
             "So call me, maybe?"]
     },
     {
-        cover: '/BlurredLines.png',
+        cover: 'BlurredLines.png',
         title: 'Blurred Lines',
         artist: 'Robin Thicke (feat. T.I. & Pharrell Williams)',
         album: 'Blurred Lines',
@@ -859,7 +859,7 @@ export const songs: Song[] = [
             "(Hey hey hey)"]
     },
     {
-        cover: '/Perfect.png',
+        cover: 'Perfect.png',
         title: 'Perfect',
         artist: 'Ed Sheeran',
         album: 'Divide',
@@ -900,7 +900,7 @@ export const songs: Song[] = [
             "You look perfect tonight"]
     },
     {
-        cover: '/SickoMode.png',
+        cover: 'SickoMode.png',
         title: 'SICKO MODE',
         artist: 'Travis Scott',
         album: 'ASTROWORLD',
@@ -1015,7 +1015,7 @@ export const songs: Song[] = [
             "Got these other bitches shook, yeah"]
     },
     // {
-    //     cover: '/AllAboutThatBass.png',
+    //     cover: '/llAboutThatBass.png',
     //     title: 'All About That Bass',
     //     artist: 'Meghan Trainor',
     //     album: 'Title',
@@ -1023,7 +1023,7 @@ export const songs: Song[] = [
     //     lyrics: []
     // },
     {
-        cover: '/Royals.png',
+        cover: 'Royals.png',
         title: 'Royals',
         artist: 'Lorde',
         album: 'Pure Heroine',
@@ -1080,7 +1080,7 @@ export const songs: Song[] = [
             "Let me live that fantasy."]
     },
     {
-        cover: '/GodsPlan.png',
+        cover: 'GodsPlan.png',
         title: `God's Plan`,
         artist: 'Drake',
         album: 'Scorpion',
@@ -1140,7 +1140,7 @@ export const songs: Song[] = [
             "Yeah"]
     },
     {
-        cover: '/MovesLikeJagger.png',
+        cover: 'MovesLikeJagger.png',
         title: 'Moves Like Jagger',
         artist: 'Maroon 5 (feat. Christina Aguilera)',
         album: 'Hands All Over',
@@ -1213,7 +1213,7 @@ export const songs: Song[] = [
             "I've got them moves like Jagger"]
     },
     {
-        cover: '/Happy.png',
+        cover: 'Happy.png',
         title: 'Happy',
         artist: 'Pharrell Williams',
         album: 'G I R L',
@@ -1291,7 +1291,7 @@ export const songs: Song[] = [
             "Clap along if you feel like that's what you wanna do"]
     },
     {
-        cover: '/JustTheWayYouAre.png',
+        cover: 'JustTheWayYouAre.png',
         title: 'Just the Way You Are',
         artist: 'Bruno Mars',
         album: 'Doo-Wops & Hooligans',
@@ -1347,7 +1347,7 @@ export const songs: Song[] = [
             "Yeaaaah"]
     },
     {
-        cover: '/Rockstar.png',
+        cover: 'Rockstar.png',
         title: 'rockstar',
         artist: 'Post Malone (feat. 21 Savage)',
         album: 'beerbongs & bentleys',
@@ -1419,7 +1419,7 @@ export const songs: Song[] = [
             "Feel just like a..."]
     },
     {
-        cover: '/TiKToK.png',
+        cover: 'TiKToK.png',
         title: 'TiK ToK',
         artist: 'Kesha',
         album: 'Animal',
@@ -1488,7 +1488,7 @@ export const songs: Song[] = [
             "Woah-oh oh oh"]
     },
     {
-        cover: '/SeeYouAgain.png',
+        cover: 'SeeYouAgain.png',
         title: 'See You Again',
         artist: 'Wiz Khalifa (feat. Charlie Puth)',
         album: 'See You Again – Single',
@@ -1535,7 +1535,7 @@ export const songs: Song[] = [
             "When I see you again, when I see you again, see you again, when I see you again"]
     },
     {
-        cover: '/DarkHorse.png',
+        cover: 'DarkHorse.png',
         title: 'Dark Horse',
         artist: 'Katy Perry (feat. Juicy J)',
         album: 'PRISM',
@@ -1621,16 +1621,16 @@ export const songs: Song[] = [
             "Cause once you're mine, once you're mine",
             "There's no going back"]
     },
+    // {
+    //     cover: 'ThriftShop.png',
+    //     title: 'Thrift Shop',
+    //     artist: 'Macklemore & Ryan Lewis (feat. Wanz)',
+    //     album: 'The Heist',
+    //     time: '3:55',
+    //     lyrics: []
+    // },
     {
-        cover: '/ThriftShop.png',
-        title: 'Thrift Shop',
-        artist: 'Macklemore & Ryan Lewis (feat. Wanz)',
-        album: 'The Heist',
-        time: '3:55',
-        lyrics: []
-    },
-    {
-        cover: '/OneMoreNight.png',
+        cover: 'OneMoreNight.png',
         title: 'One More Night',
         artist: 'Maroon 5',
         album: 'Overexposed',
@@ -1681,7 +1681,7 @@ export const songs: Song[] = [
             "Now baby give me one more night"]
     },
     {
-        cover: '/WeAreYoung.png',
+        cover: 'WeAreYoung.png',
         title: 'We Are Young',
         artist: 'fun. (feat. Janelle Monáe)',
         album: 'Some Nights',
@@ -1754,7 +1754,7 @@ export const songs: Song[] = [
             "I'll carry you home tonight"]
     },
     {
-        cover: '/ThatsWhatILike.png',
+        cover: 'ThatsWhatILike.png',
         title: `That's What I Like`,
         artist: 'Bruno Mars',
         album: '24K Magic',
@@ -1829,7 +1829,7 @@ export const songs: Song[] = [
             "Lucky for you, that's what I like, that's what I like"]
     },
     {
-        cover: '/TheHills.png',
+        cover: 'TheHills.png',
         title: 'The Hills',
         artist: 'The Weeknd',
         album: 'Beauty Behind The Madness',
@@ -1837,7 +1837,7 @@ export const songs: Song[] = [
         lyrics: []
     },
     {
-        cover: '/AllOfMe.png',
+        cover: 'AllOfMe.png',
         title: 'All of Me',
         artist: 'John Legend',
         album: 'Love In The Future',
@@ -1895,16 +1895,16 @@ export const songs: Song[] = [
             "I give you all of me",
             "And you give mme all of you"]
     },
+    // {
+    //     cover: 'Happier.png',
+    //     title: 'Happier',
+    //     artist: 'Marshmello & Bastille',
+    //     album: 'Happier – Single',
+    //     time: '3:34',
+    //     lyrics: []
+    // },
     {
-        cover: '/Happier.png',
-        title: 'Happier',
-        artist: 'Marshmello & Bastille',
-        album: 'Happier – Single',
-        time: '3:34',
-        lyrics: []
-    },
-    {
-        cover: '/ShakeItOff.png',
+        cover: 'ShakeItOff.png',
         title: 'Shake It Off',
         artist: 'Taylor Swift',
         album: '1989',
@@ -1976,7 +1976,7 @@ export const songs: Song[] = [
             "I, I shake it off, I shake it off"]
     },
     {
-        cover: '/OneDance.png',
+        cover: 'OneDance.png',
         title: 'One Dance',
         artist: 'Drake (feat. Wizkid & Kyla)',
         album: 'Views',
@@ -2045,7 +2045,7 @@ export const songs: Song[] = [
             "Higher powers taking a hold on me"]
     },
     {
-        cover: '/Radioactive.png',
+        cover: 'Radioactive.png',
         title: 'Radioactive',
         artist: 'Imagine Dragons',
         album: 'Night Visions',
@@ -2084,7 +2084,7 @@ export const songs: Song[] = [
             "Whoo, whoa, I'm radioactive, radioactive"]
     },
     {
-        cover: '/SexyAndIKnowIt.png',
+        cover: 'SexyAndIKnowIt.png',
         title: 'Sexy And I Know It',
         artist: 'LMFAO',
         album: 'Sorry For Party Rocking',
@@ -2123,7 +2123,7 @@ export const songs: Song[] = [
             "(Grazie a schweppes, lyloo per questo testo)"]
     },
     {
-        cover: '/SomeoneLikeYou.png',
+        cover: 'SomeoneLikeYou.png',
         title: 'Someone Like You',
         artist: 'Adele',
         album: '21',
@@ -2169,7 +2169,7 @@ export const songs: Song[] = [
             "Sometimes it lasts in love, but sometimes it hurts instead"]
     },
     {
-        cover: '/CountingStars.png',
+        cover: 'CountingStars.png',
         title: 'Counting Stars',
         artist: 'OneRepublic',
         album: 'Native',
@@ -2269,16 +2269,16 @@ export const songs: Song[] = [
             "Sink in the river",
             "The lessons are learnt"]
     },
+    // {
+    //     cover: 'ET.png',
+    //     title: 'E.T.',
+    //     artist: 'Katy Perry (feat. Kanye West)',
+    //     album: 'Teenage Dream',
+    //     time: '3:26',
+    //     lyrics: []
+    // },
     {
-        cover: '/ET.png',
-        title: 'E.T.',
-        artist: 'Katy Perry (feat. Kanye West)',
-        album: 'Teenage Dream',
-        time: '3:26',
-        lyrics: []
-    },
-    {
-        cover: '/TrapQueen.png',
+        cover: 'TrapQueen.png',
         title: 'Trap Queen',
         artist: 'Fetty Wap',
         album: 'Fetty Wap',
@@ -2342,7 +2342,7 @@ export const songs: Song[] = [
             "Cause Remy Boyz or nothin', Re-Re-Remy Boyz or nothin'"]
     },
     {
-        cover: '/LoveYourself.png',
+        cover: 'LoveYourself.png',
         title: 'Love Yourself',
         artist: 'Justin Bieber',
         album: 'Purpose',
@@ -2401,7 +2401,7 @@ export const songs: Song[] = [
             "You should go and love yourself"]
     },
     {
-        cover: '/Firework.png',
+        cover: 'Firework.png',
         title: 'Firework',
         artist: 'Katy Perry',
         album: 'Teenage Dream',
@@ -2462,7 +2462,7 @@ export const songs: Song[] = [
             "Even brighter than the moon, moon, moon"]
     },
     {
-        cover: '/GiveMeEverything.png',
+        cover: 'GiveMeEverything.png',
         title: 'Give Me Everything',
         artist: 'Pitbull (feat. AFROJACK, Ne-Yo, & Nayer)',
         album: 'Planet Pit',
@@ -2562,7 +2562,7 @@ export const songs: Song[] = [
             "And we might not get tomorrow"]
     },
     {
-        cover: '/LockedOutOfHeaven.png',
+        cover: 'LockedOutOfHeaven.png',
         title: 'Locked out of Heaven',
         artist: 'Bruno Mars',
         album: 'Unorthodox Jukebox',
@@ -2631,7 +2631,7 @@ export const songs: Song[] = [
             "Ooh!"]
     },
     {
-        cover: '/LoveTheWayYouLie.png',
+        cover: 'LoveTheWayYouLie.png',
         title: 'Love The Way You Lie',
         artist: 'Eminem (feat. Rihanna)',
         album: 'Recovery',
@@ -2717,7 +2717,7 @@ export const songs: Song[] = [
             "I love the way you lie, I love the way you lie"]
     },
     {
-        cover: '/ThinkingOutLoud.png',
+        cover: 'ThinkingOutLoud.png',
         title: 'Thinking out Loud',
         artist: 'Ed Sheeran',
         album: 'x',
@@ -2760,7 +2760,7 @@ export const songs: Song[] = [
             "And we found love right where we are"]
     },
     {
-        cover: '/Sorry.png',
+        cover: 'Sorry.png',
         title: 'Sorry',
         artist: 'Justin Bieber',
         album: 'Purpose',
@@ -2812,7 +2812,7 @@ export const songs: Song[] = [
             "Is it too late to say I'm sorry now?"]
     },
     {
-        cover: '/CaliforniaGurls.png',
+        cover: 'CaliforniaGurls.png',
         title: 'California Gurls',
         artist: 'Katy Perry (feat. Snoop Dogg)',
         album: 'Teenage Dream',
@@ -2890,7 +2890,7 @@ export const songs: Song[] = [
             "I really wish they all could be California girls"]
     },
     {
-        cover: '/Dynamite.png',
+        cover: 'Dynamite.png',
         title: 'Dynamite',
         artist: 'Taio Cruz',
         album: 'Rokstarr',
