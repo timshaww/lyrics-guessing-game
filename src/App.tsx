@@ -205,7 +205,11 @@ const App = () => {
           }}
         >
           <div className="mb-12 flex flex-row items-center gap-10">
-            <img src="/lyrics-guessing-game/AppleMusicHeading.png" alt="AppleMusicHeading" className="h-40 md:h-60" />
+            <img
+              src={import.meta.env.BASE_URL + '/AppleMusicHeading.png'}
+              alt="AppleMusicHeading"
+              className="h-40 md:h-60"
+            />
             <div className="font-apple flex h-[240px] w-full flex-col justify-between">
               <div className="flex h-full flex-col justify-center">
                 <h1 className="text-apple-text-main text-3xl font-semibold md:text-5xl">Guess the 2010's Song</h1>
@@ -272,7 +276,11 @@ const App = () => {
                             setIsInputFocused(false); // Close dropdown on selection
                           }}
                         >
-                          <img src={song.cover} alt={song.title} className="mr-2 h-10 w-10 rounded" />
+                          <img
+                            src={import.meta.env.BASE_URL + song.cover}
+                            alt={song.title}
+                            className="mr-2 h-10 w-10 rounded"
+                          />
                           <div>
                             <p className="text-apple-text-main font-bold">{song.title}</p>
                             <p className="text-apple-text-accent text-sm">{song.artist}</p>
@@ -341,7 +349,10 @@ const App = () => {
           {isAnswerRevealed && (
             <div className="border-t-apple-bg-hover flex flex-row items-center border border-x-0 border-b-0 p-2">
               <img
-                src={songs.find((song) => song.title === correctSongs[correctSongs.length - 1])?.cover}
+                src={
+                  import.meta.env.BASE_URL +
+                  songs.find((song) => song.title === correctSongs[correctSongs.length - 1])?.cover
+                }
                 alt={correctSongs[correctSongs.length - 1]}
                 className="size-16 rounded"
               />
@@ -371,7 +382,7 @@ const App = () => {
           })}
         >
           <img
-            src="/lyrics-guessing-game/LyricIcon.png"
+            src={import.meta.env.BASE_URL + '/LyricIcon.png'}
             alt="Lyrics"
             className={cn('hover:bg-apple-bg-hover size-10 rounded p-2')}
           />
