@@ -5,7 +5,7 @@ import { HiMiniArrowRightCircle } from 'react-icons/hi2';
 import SongList from './components/SongList';
 import { cn } from './lib/utils';
 import { songs } from './songs';
-import { Lightbulb, Music } from 'lucide-react';
+import { Lightbulb, Music, Settings } from 'lucide-react';
 
 type LyricDisplay = {
   lyric: string;
@@ -33,6 +33,7 @@ const App = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(true);
   const [isCelebrating, setIsCelebrating] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const [correctSongs, setCorrectSongs] = useState<string[]>([]);
   const [correctLyrics, setCorrectLyrics] = useState<LyricsIndex>({ lyrics: [], index: -1 });
@@ -131,6 +132,20 @@ const App = () => {
         })}
         id="border"
       />
+      {/* Settings popover */}
+      <div
+        className={cn(
+          'fixed left-0 top-0 z-20 flex h-screen w-full items-center justify-center backdrop-blur-xl duration-500',
+          {
+            hidden: !isSettingsOpen,
+          },
+        )}
+        onClick={() => setIsSettingsOpen(false)}
+      >
+        <div className="bg-apple-bg-accent border-apple-bg-hover no-scrollbar max-h-64 w-[30%] overflow-auto rounded-xl border p-6 shadow-md">
+          <h1 className="text-apple-text-main w-full text-3xl font-semibold">Settings</h1>
+        </div>
+      </div>
       {/* Main content that will shrink when the sheet opens */}
       <div
         className={cn('px-24 pt-48 transition-all duration-300 ease-in-out', {
@@ -138,7 +153,14 @@ const App = () => {
           'w-[calc(100%-300px)]': isSheetOpen,
         })}
       >
-        <div className="bg-apple-bg-main max-w-screen-3xl no-scrollbar h-full">
+        <div
+          className="bg-apple-bg-main max-w-screen-3xl no-scrollbar h-full"
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              handleGuess();
+            }
+          }}
+        >
           <div className="mb-12 flex flex-row items-center gap-10">
             <img src="/AppleMusicHeading.png" alt="AppleMusicHeading" className="h-40 md:h-60" />
             <div className="font-apple flex h-[240px] w-full flex-col justify-between">
@@ -278,29 +300,29 @@ const App = () => {
 
       {/* Button to toggle the sheet */}
       <div
-        className={cn('fixed top-5 flex w-[77px] flex-col items-end', {
-          'right-[320px]': isSheetOpen,
-          'right-5': !isSheetOpen,
+        className={cn('fixed top-3 flex w-[77px] flex-col items-end', {
+          'right-[120px]': isSheetOpen,
+          'right-3': !isSheetOpen,
         })}
       >
         <button
           onClick={toggleSheet}
-          className={cn('fixed top-5 mb-2 rounded-md text-white duration-300', {
-            'right-[320px]': isSheetOpen,
-            'right-5': !isSheetOpen,
+          className={cn('fixed top-3 mb-2 rounded-md text-white duration-300', {
+            'right-[312px]': isSheetOpen,
+            'right-3': !isSheetOpen,
           })}
         >
           <img src="/LyricIcon.png" alt="Lyrics" className={cn('hover:bg-apple-bg-hover size-10 rounded p-2')} />
         </button>
         <div
           className={cn(
-            'fixed top-[60px] mb-2 flex h-10 flex-row rounded p-2 duration-300',
+            'fixed top-[52px] mb-2 flex h-10 flex-row rounded p-2 duration-300',
             {
               'opacity-0': !isSheetOpen,
             },
             {
-              'right-[320px]': isSheetOpen,
-              'right-5': !isSheetOpen,
+              'right-[312px]': isSheetOpen,
+              'right-3': !isSheetOpen,
             },
           )}
         >
@@ -313,13 +335,13 @@ const App = () => {
         </div>
         <div
           className={cn(
-            'fixed top-[100px] mb-2 flex h-10 flex-row rounded p-2 duration-300',
+            'fixed top-[92px] mb-2 flex h-10 flex-row rounded p-2 duration-300',
             {
               'opacity-0': !isSheetOpen,
             },
             {
-              'right-[320px]': isSheetOpen,
-              'right-5': !isSheetOpen,
+              'right-[312px]': isSheetOpen,
+              'right-3': !isSheetOpen,
             },
           )}
         >
@@ -329,6 +351,13 @@ const App = () => {
               : {displayedLyrics.filter((line) => !line.isLeft).length}/{NUM_GUESSES}
             </p>
           </span>
+        </div>
+        <div
+          id={'balls'}
+          className={cn('fixed bottom-3 left-3 duration-300')}
+          onClick={() => setIsSettingsOpen(!isSettingsOpen)}
+        >
+          <Settings className="text-apple-text-accent hover:bg-apple-bg-hover size-10 rounded p-2" />
         </div>
       </div>
     </div>
