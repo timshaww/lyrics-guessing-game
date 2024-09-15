@@ -5,7 +5,7 @@ import { HiMiniArrowRightCircle } from 'react-icons/hi2';
 import SongList from './components/SongList';
 import { cn } from './lib/utils';
 import { songs } from './songs';
-import { Lightbulb, Music, Settings } from 'lucide-react';
+import { Lightbulb, Music, Settings, Sparkles, X } from 'lucide-react';
 
 type LyricDisplay = {
   lyric: string;
@@ -27,13 +27,14 @@ export const parseLyrics = (lyricsString: string): string[] => {
 };
 
 const App = () => {
-  const NUM_LYRICS = 6;
-  const NUM_GUESSES = 6;
+  const [NUM_LYRICS, setNUM_LYRICS] = useState(6);
+  const [NUM_GUESSES, setNUM_GUESSES] = useState(6);
 
   const [isSheetOpen, setIsSheetOpen] = useState(true);
   const [isCelebrating, setIsCelebrating] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isAnswerRevealed, setIsAnswerRevealed] = useState(false);
 
   const [correctSongs, setCorrectSongs] = useState<string[]>([]);
   const [correctLyrics, setCorrectLyrics] = useState<LyricsIndex>({ lyrics: [], index: -1 });
@@ -61,6 +62,7 @@ const App = () => {
   };
 
   const getLyrics = () => {
+    setIsAnswerRevealed(false);
     const lyrics: string[] = getSong();
     const randomIndex = Math.floor(Math.random() * lyrics.length - NUM_LYRICS);
     const numLyrics = lyrics.slice(randomIndex, randomIndex + NUM_LYRICS);
@@ -88,6 +90,7 @@ const App = () => {
     console.log('correct lyrics', correctLyrics.lyrics);
     if (guess.index === NUM_GUESSES) {
       alert('You have reached the maximum number of guesses!');
+      setIsAnswerRevealed(true);
       return;
     }
     displayAdditionalGuess();
@@ -106,6 +109,7 @@ const App = () => {
     setCorrectLyrics({ index: -1, lyrics: [] });
     setGuess({ string: '', index: 0 });
     setIsCelebrating(true);
+    setIsAnswerRevealed(true);
     setTimeout(() => {
       setIsCelebrating(false);
     }, 2000);
@@ -124,6 +128,10 @@ const App = () => {
     displayAdditionalLyric();
   };
 
+  useEffect(() => {
+    getLyrics();
+  }, [isSettingsOpen]);
+
   return (
     <div className="bg-apple-bg-main relative flex overflow-hidden">
       <div
@@ -140,10 +148,45 @@ const App = () => {
             hidden: !isSettingsOpen,
           },
         )}
-        onClick={() => setIsSettingsOpen(false)}
       >
         <div className="bg-apple-bg-accent border-apple-bg-hover no-scrollbar max-h-64 w-[30%] overflow-auto rounded-xl border p-6 shadow-md">
-          <h1 className="text-apple-text-main w-full text-3xl font-semibold">Settings</h1>
+          <div className="flex flex-row justify-between">
+            <h1 className="text-apple-text-main w-full text-3xl font-semibold">Settings</h1>
+            <span className="flex size-10 items-start justify-end pb-4 pl-4" onClick={() => setIsSettingsOpen(false)}>
+              <X className="text-apple-text-accent hover:bg-apple-bg-hover size-6 rounded duration-100" />
+            </span>
+          </div>
+
+          <div className="mt-4 flex flex-col items-start gap-2">
+            <div className="flex w-full flex-row items-center justify-between">
+              <p className="font-apple text-apple-text-main w-30">Max Lyrics</p>
+              <input
+                type="number"
+                max={20}
+                value={NUM_LYRICS}
+                onInput={(event) => setNUM_LYRICS(Number((event.target as HTMLInputElement).value))}
+                className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple rounded-md border border-opacity-50 px-1 outline-none"
+              />
+            </div>
+            <div className="flex w-full flex-row items-center justify-between">
+              <p className="font-apple text-apple-text-main w-30">Max Guesses</p>
+              <input
+                type="number"
+                max={20}
+                value={NUM_GUESSES}
+                onInput={(event) => setNUM_GUESSES(Number((event.target as HTMLInputElement).value))}
+                className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple rounded-md border border-opacity-50 px-1 outline-none"
+              />
+            </div>
+            <div className="flex w-full justify-end">
+              <button
+                className="bg-apple-red text-apple-text-main mt-4 h-fit cursor-pointer rounded-md px-3 py-1"
+                onClick={() => setIsSettingsOpen(false)}
+              >
+                Save
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       {/* Main content that will shrink when the sheet opens */}
@@ -272,7 +315,7 @@ const App = () => {
         })}
         id="Sheet"
       >
-        <div className={cn('fixed top-0 h-full overflow-hidden p-3', { hidden: !isSheetOpen })}>
+        <div className={cn('no-scrollbar fixed top-0 h-full overflow-auto p-3', { hidden: !isSheetOpen })}>
           {/* Sheet content, only visible when sheet is open */}
           {displayedLyrics.map((line, index) => (
             <p
@@ -295,6 +338,21 @@ const App = () => {
               {line.lyric}
             </p>
           ))}
+          {isAnswerRevealed && (
+            <div className="border-t-apple-bg-hover flex flex-row items-center border border-x-0 border-b-0 p-2">
+              <img
+                src={songs.find((song) => song.title === correctSongs[correctSongs.length - 1])?.cover}
+                alt={correctSongs[correctSongs.length - 1]}
+                className="size-16 rounded"
+              />
+              <div className="ml-4 flex h-full flex-col justify-center">
+                <p className="text-apple-text-main text-xl font-semibold">{correctSongs[correctSongs.length - 1]}</p>
+                <p className="text-apple-text-accent text-xs">
+                  {songs.find((song) => song.title === correctSongs[correctSongs.length - 1])?.artist}
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -316,7 +374,7 @@ const App = () => {
         </button>
         <div
           className={cn(
-            'fixed top-[52px] mb-2 flex h-10 flex-row rounded p-2 duration-300',
+            'fixed top-[56px] mb-2 flex h-10 flex-row rounded p-2 duration-300',
             {
               'opacity-0': !isSheetOpen,
             },
@@ -335,7 +393,7 @@ const App = () => {
         </div>
         <div
           className={cn(
-            'fixed top-[92px] mb-2 flex h-10 flex-row rounded p-2 duration-300',
+            'fixed top-[100px] mb-2 flex h-10 flex-row rounded p-2 duration-300',
             {
               'opacity-0': !isSheetOpen,
             },
@@ -352,6 +410,24 @@ const App = () => {
             </p>
           </span>
         </div>
+        {correctLyrics.index === correctLyrics.lyrics.length - 1 && (
+          <div
+            id={'balls'}
+            className={cn(
+              'fixed top-[144px] duration-300',
+              {
+                'right-[312px]': isSheetOpen,
+                'right-3': !isSheetOpen,
+              },
+              {
+                'opacity-0': !isSheetOpen,
+              },
+            )}
+            onClick={() => setIsAnswerRevealed(!isAnswerRevealed)}
+          >
+            <Sparkles className="text-apple-text-accent hover:bg-apple-bg-hover size-10 rounded p-2" />
+          </div>
+        )}
         <div
           id={'balls'}
           className={cn('fixed bottom-3 left-3 duration-300')}
