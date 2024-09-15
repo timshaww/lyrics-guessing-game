@@ -4,7 +4,7 @@ const SongTable = () => {
   const songs = songImport;
 
   return (
-    <div className="overflow-x-auto">
+    <div className="mb-12 overflow-x-auto">
       <table className="min-w-full table-auto">
         <thead className="text-apple-text-accent text-sm">
           <tr>

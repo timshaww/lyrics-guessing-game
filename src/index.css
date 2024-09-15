@@ -20,3 +20,102 @@ scrollbar-width: none; /* Firefox */
         --radius: 0.5rem;
     }
 }
+
+.open {
+    transform: translateX(0); /* Sheet is visible */
+  }
+  
+  .closed {
+    transform: translateX(100%); /* Sheet is off-screen */
+  }
+  
+  .transition-transform {
+    transition: transform 0.3s ease-in-out; /* Smooth transition for opening/closing */
+  }
+
+  .glow-border {
+    border: 2px solid #00ff00; /* Change this color for the base border */
+    text-align: center;
+  
+    /* Neon glow effect */
+    box-shadow: 
+    inset 0 0 2px #00ff00, /* First layer of glow */
+    inset 0 0 4px #00ff00, /* Second layer of glow */
+    inset 0 0 6px #00ff00, /* Third layer of glow */
+    inset 0 0 8px #00ff00, /* Fourth layer of glow */
+    inset 0 0 10px #00ff00, /* Fifth layer of glow */
+    inset 0 0 12px #00ff00, /* Sixth layer of glow */
+    inset 0 0 14px #00ff00; /* Final intense layer of glow */
+  }
+  
+  /* Optional: Create a pulsing animation */
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 
+        inset 0 0 0px #00ff00,
+        inset 0 0 0px #00ff00,
+        inset 0 0 0px #00ff00,
+        inset 0 0 0px #00ff00,
+        inset 0 0 0px #00ff00,
+        inset 0 0 0px #00ff00,
+        inset 0 0 0px #00ff00;
+    }
+    40% {
+      box-shadow: 
+        inset 0 0 5px #00ff00,
+        inset 0 0 10px #00ff00,
+        inset 0 0 15px #00ff00,
+        inset 0 0 20px #00ff00,
+        inset 0 0 25px #00ff00,
+        inset 0 0 30px #00ff00,
+        inset 0 0 35px #00ff00;
+    }
+    50% {
+      box-shadow: 
+        inset 0 0 0px #00ff00,
+        inset 0 0 5px #00ff00,
+        inset 0 0 10px #00ff00,
+        inset 0 0 15px #00ff00,
+        inset 0 0 20x #00ff00,
+        inset 0 0 25px #00ff00,
+        inset 0 0 30px #00ff00;
+    }
+    60% {
+      box-shadow: 
+        inset 0 0 5px #00ff00,
+        inset 0 0 10px #00ff00,
+        inset 0 0 15px #00ff00,
+        inset 0 0 20px #00ff00,
+        inset 0 0 25px #00ff00,
+        inset 0 0 30px #00ff00,
+        inset 0 0 35px #00ff00;
+    }
+  }
+  
+  .pulsing-glow-border {
+    animation: pulse-glow 2s infinite; /* 2-second pulse animation */
+  }
+  
+  @layer utilities {
+    @keyframes shake {
+      0% {
+        transform: translateX(0);
+      }
+      10%, 30%, 50%, 70% {
+        transform: translateX(-5px);
+      }
+      20%, 40%, 60%, 80% {
+        transform: translateX(5px);
+      }
+      90% {
+        transform: translateX(-3px);
+      }
+      100% {
+        transform: translateX(0);
+      }
+    }
+  
+    .animate-shake {
+      animation: shake 0.8s ease-out;
+    }
+  }
