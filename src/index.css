@@ -118,4 +118,36 @@ scrollbar-width: none; /* Firefox */
     .animate-shake {
       animation: shake 0.8s ease-out;
     }
+  
+    .hover-color-sweep {
+      position: relative;
+      display: inline-block;
+      background: linear-gradient(
+        to right,
+        #8f9190 0%,
+        #8f9190 50%,
+        #dcdcdc 50%,
+        #dcdcdc 100%
+      );
+      background-size: 200% 100%;
+      background-position: 100% 0;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      /* text-fill-color: transparent; */
+      transition: background-position 0.5s ease-out;
+    }
+    .hover-color-sweep:hover {
+      background-position: 0 0;
+    }
   }
+
+  .animated-line .word-span {
+    color: #8f9190;
+    transition: color 0.3s ease var(--delay);
+  }
+  
+  .animated-line:hover .word-span {
+    color: #dcdcdc;
+  }
+  

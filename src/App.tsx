@@ -108,7 +108,14 @@ const SettingsPopover = ({
   );
 };
 
-const LyricsSheet = ({ isOpen, displayedLyrics, isAnswerRevealed, correctSong }: any) => {
+interface LyricSheetProps {
+  isOpen: boolean;
+  displayedLyrics: LyricDisplay[];
+  isAnswerRevealed: boolean;
+  correctSong: string;
+}
+
+const LyricsSheet = ({ isOpen, displayedLyrics, isAnswerRevealed, correctSong }: LyricSheetProps) => {
   return (
     <div
       className={cn('bg-apple-bg-lyrics border-apple-bg-hover border-l transition-all duration-300 ease-in-out', {
@@ -117,26 +124,25 @@ const LyricsSheet = ({ isOpen, displayedLyrics, isAnswerRevealed, correctSong }:
       })}
       id="Sheet"
     >
-      <div className={cn('no-scrollbar fixed top-0 h-full overflow-auto p-3', { hidden: !isOpen })}>
+      <div
+        className={cn('no-scrollbar fixed top-0 h-full overflow-auto p-3', {
+          hidden: !isOpen,
+        })}
+      >
         {displayedLyrics.map((line: LyricDisplay, index: number) => (
-          <p
+          <AnimatedText
             key={index}
-            className={cn(
-              'text-apple-text-accent hover:bg-apple-bg-hover hover:text-apple-text-main my-2 w-full rounded-xl p-3 text-2xl font-bold first:mt-12',
-              {
-                'text-left': line.isLeft,
-                'text-right text-lg': !line.isLeft,
-                'text-green-500 opacity-60 hover:text-green-500':
-                  line.lyric.toLowerCase() === correctSong.toLowerCase(),
-                'animate-shake text-red-500 hover:text-red-500':
-                  !line.isLeft && line.lyric.toLowerCase() !== correctSong.toLowerCase(),
-              },
-            )}
-          >
-            {line.lyric}
-          </p>
+            text={line.lyric}
+            className={cn('hover:bg-apple-bg-hover my-2 w-full rounded-xl p-3 text-2xl font-bold first:mt-12', {
+              'animated-line text-left': line.isLeft,
+              'text-right text-lg': !line.isLeft,
+              'animate-shake text-red-500 hover:text-red-500':
+                !line.isLeft && line.lyric.toLowerCase() !== correctSong?.toLowerCase(),
+              'text-green-500': !line.isLeft && line.lyric.toLowerCase() === correctSong?.toLowerCase(),
+            })}
+          />
         ))}
-        {isAnswerRevealed && (
+        {isAnswerRevealed && correctSong && (
           <div className="border-t-apple-bg-hover flex flex-row items-center border border-x-0 border-b-0 p-2">
             <img
               src={import.meta.env.BASE_URL + songs.find((song) => song.title === correctSong)?.cover}
@@ -156,10 +162,29 @@ const LyricsSheet = ({ isOpen, displayedLyrics, isAnswerRevealed, correctSong }:
   );
 };
 
+interface AnimatedTextProps {
+  text: string;
+  className: string;
+}
+
+const AnimatedText = ({ text, className }: AnimatedTextProps) => {
+  const words = text.split(' ');
+
+  return (
+    <p className={`${className}`}>
+      {words.map((word: string, index: number) => (
+        <span key={index} className="word-span" style={{ '--delay': `${index * 0.1}s` } as React.CSSProperties}>
+          {word}{' '}
+        </span>
+      ))}
+    </p>
+  );
+};
+
 const App = () => {
   const [numLyrics, setNumLyrics] = useState(6);
   const [numGuesses, setNumGuesses] = useState(6);
-  const [isAutoShuffle, setIsAutoShuffle] = useState(true);
+  const [isAutoShuffle, setIsAutoShuffle] = useState(false);
   const [isAutoReveal, setIsAutoReveal] = useState(true);
 
   const [isSheetOpen, setIsSheetOpen] = useState(true);
@@ -280,12 +305,7 @@ const App = () => {
 
   return (
     <div className="bg-apple-bg-main relative flex overflow-hidden">
-      <div
-        className={cn('pulsing-glow-border fixed left-0 top-0 h-screen w-full', {
-          hidden: !isCelebrating,
-        })}
-        id="border"
-      />
+      {isCelebrating && <div className={cn('pulsing-glow-border fixed left-0 top-0 h-screen w-full')} id="border" />}
       {/* Settings popover */}
       <SettingsPopover
         isOpen={isSettingsOpen}
@@ -350,7 +370,7 @@ const App = () => {
                 <div className="relative w-full">
                   <input
                     type="text"
-                    className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple w-full rounded-md border border-opacity-50 px-1 outline-none"
+                    className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple h-full w-full rounded-md border border-opacity-50 px-1 outline-none"
                     value={guess.string}
                     onChange={handleInputChange}
                     onFocus={() => setIsInputFocused(true)}

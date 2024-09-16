@@ -29,7 +29,21 @@ export default {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+		keyframes: {
+		slideInLeft: {
+			'0%': { transform: 'translateX(-100%)', opacity: '0' },
+			'100%': { transform: 'translateX(0)', opacity: '1' },
+		},
+		slideInRight: {
+			'0%': { transform: 'translateX(100%)', opacity: '0' },
+			'100%': { transform: 'translateX(0)', opacity: '1' },
+		},
+		},
+		animation: {
+			slideInLeft: 'slideInLeft 0.5s ease-out forwards',
+			slideInRight: 'slideInRight 0.5s ease-out forwards',
+		}
   	}
   },
   plugins: [
