@@ -26,11 +26,141 @@ export const parseLyrics = (lyricsString: string): string[] => {
   return lyricsString.split(/\r?\n/).filter((line) => line.trim() !== '');
 };
 
+const SettingsPopover = ({
+  isOpen,
+  onClose,
+  numLyrics,
+  setNumLyrics,
+  numGuesses,
+  setNumGuesses,
+  isAutoShuffle,
+  setIsAutoShuffle,
+  isAutoReveal,
+  setIsAutoReveal,
+}: any) => {
+  return (
+    <div
+      className={cn(
+        'fixed left-0 top-0 z-20 flex h-screen w-full items-center justify-center backdrop-blur-xl duration-500',
+        {
+          hidden: !isOpen,
+        },
+      )}
+    >
+      <div className="bg-apple-bg-accent border-apple-bg-hover no-scrollbar max-h-[400px] w-[30%] overflow-auto rounded-xl border p-6 shadow-md">
+        <div className="flex flex-row justify-between">
+          <h1 className="text-apple-text-main w-full text-3xl font-semibold">Settings</h1>
+          <span className="flex size-10 items-start justify-end pb-4 pl-4" onClick={onClose}>
+            <X className="text-apple-text-accent hover:bg-apple-bg-hover size-6 rounded duration-100" />
+          </span>
+        </div>
+
+        <div className="mt-4 flex flex-col items-start gap-2">
+          <div className="grid w-full grid-cols-2 items-center justify-between">
+            <p className="font-apple text-apple-text-main w-30">Max Lyrics</p>
+            <input
+              type="number"
+              max={20}
+              value={numLyrics}
+              onChange={(event) => setNumLyrics(Number(event.target.value))}
+              className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple rounded-md border border-opacity-50 px-1 outline-none"
+            />
+          </div>
+          <div className="grid w-full grid-cols-2 items-center justify-between">
+            <p className="font-apple text-apple-text-main w-30">Max Guesses</p>
+            <input
+              type="number"
+              max={20}
+              value={numGuesses}
+              onChange={(event) => setNumGuesses(Number(event.target.value))}
+              className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple rounded-md border border-opacity-50 px-1 outline-none"
+            />
+          </div>
+          <div className="grid w-full grid-cols-2 items-center justify-start">
+            <p className="font-apple text-apple-text-main w-30">Auto Shuffle</p>
+            <input
+              type="checkbox"
+              checked={isAutoShuffle}
+              onChange={(event) => setIsAutoShuffle(event.target.checked)}
+              className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple rounded-md border border-opacity-50 px-1 outline-none"
+            />
+          </div>
+          <div className="grid w-full grid-cols-2 items-center justify-start">
+            <p className="font-apple text-apple-text-main w-30">Auto Reveal Answer</p>
+            <input
+              type="checkbox"
+              checked={isAutoReveal}
+              onChange={(event) => setIsAutoReveal(event.target.checked)}
+              className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple rounded-md border border-opacity-50 px-1 outline-none"
+            />
+          </div>
+          <div className="flex w-full justify-end">
+            <button
+              className="bg-apple-red text-apple-text-main mt-4 h-fit cursor-pointer rounded-md px-3 py-1"
+              onClick={onClose}
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const LyricsSheet = ({ isOpen, displayedLyrics, isAnswerRevealed, correctSong }: any) => {
+  return (
+    <div
+      className={cn('bg-apple-bg-lyrics border-apple-bg-hover border-l transition-all duration-300 ease-in-out', {
+        'w-[300px]': isOpen,
+        'w-0': !isOpen,
+      })}
+      id="Sheet"
+    >
+      <div className={cn('no-scrollbar fixed top-0 h-full overflow-auto p-3', { hidden: !isOpen })}>
+        {displayedLyrics.map((line: LyricDisplay, index: number) => (
+          <p
+            key={index}
+            className={cn(
+              'text-apple-text-accent hover:bg-apple-bg-hover hover:text-apple-text-main my-2 w-full rounded-xl p-3 text-2xl font-bold first:mt-12',
+              {
+                'text-left': line.isLeft,
+                'text-right text-lg': !line.isLeft,
+                'text-green-500 opacity-60 hover:text-green-500':
+                  line.lyric.toLowerCase() === correctSong.toLowerCase(),
+                'animate-shake text-red-500 hover:text-red-500':
+                  !line.isLeft && line.lyric.toLowerCase() !== correctSong.toLowerCase(),
+              },
+            )}
+          >
+            {line.lyric}
+          </p>
+        ))}
+        {isAnswerRevealed && (
+          <div className="border-t-apple-bg-hover flex flex-row items-center border border-x-0 border-b-0 p-2">
+            <img
+              src={import.meta.env.BASE_URL + songs.find((song) => song.title === correctSong)?.cover}
+              alt={correctSong}
+              className="size-16 rounded"
+            />
+            <div className="ml-4 flex h-full flex-col justify-center">
+              <p className="text-apple-text-main text-xl font-semibold">{correctSong}</p>
+              <p className="text-apple-text-accent text-xs">
+                {songs.find((song) => song.title === correctSong)?.artist}
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const App = () => {
-  const [NUM_LYRICS, setNUM_LYRICS] = useState(6);
-  const [NUM_GUESSES, setNUM_GUESSES] = useState(6);
-  const [IS_AUTO_SHUFFLE, setIS_AUTO_SHUFFLE] = useState(true);
-  const [IS_AUTO_REVEAL, setIS_AUTO_REVEAL] = useState(true);
+  const [numLyrics, setNumLyrics] = useState(6);
+  const [numGuesses, setNumGuesses] = useState(6);
+  const [isAutoShuffle, setIsAutoShuffle] = useState(true);
+  const [isAutoReveal, setIsAutoReveal] = useState(true);
 
   const [isSheetOpen, setIsSheetOpen] = useState(true);
   const [isCelebrating, setIsCelebrating] = useState(false);
@@ -45,6 +175,7 @@ const App = () => {
 
   useEffect(() => {
     getLyrics();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getSong = (): string[] => {
@@ -56,21 +187,27 @@ const App = () => {
     const randomIndex = Math.floor(Math.random() * remainingSongs.length);
     const selectedSong = remainingSongs[randomIndex];
 
-    setCorrectSongs([...correctSongs, selectedSong.title]);
-    if (selectedSong.lyrics.length < NUM_LYRICS) {
+    if (selectedSong.lyrics.length < numLyrics) {
+      // Remove this song and try again
+      const newCorrectSongs = [...correctSongs, selectedSong.title];
+      setCorrectSongs(newCorrectSongs);
       return getSong();
     }
-    console.log(selectedSong.lyrics);
+    setCorrectSongs([...correctSongs, selectedSong.title]);
     return selectedSong.lyrics;
   };
 
   const getLyrics = () => {
     setIsAnswerRevealed(false);
     const lyrics: string[] = getSong();
-    const randomIndex = Math.floor(Math.random() * lyrics.length - NUM_LYRICS);
-    const numLyrics = lyrics.slice(randomIndex, randomIndex + NUM_LYRICS);
-    setCorrectLyrics({ index: 0, lyrics: numLyrics });
-    setDisplayedLyrics([{ lyric: numLyrics[0], isLeft: true }]);
+    if (lyrics.length === 0) {
+      return;
+    }
+    const maxStartIndex = Math.max(lyrics.length - numLyrics, 0);
+    const randomIndex = Math.floor(Math.random() * (maxStartIndex + 1));
+    const numLyricsArray = lyrics.slice(randomIndex, randomIndex + numLyrics);
+    setCorrectLyrics({ index: 0, lyrics: numLyricsArray });
+    setDisplayedLyrics([{ lyric: numLyricsArray[0], isLeft: true }]);
   };
 
   const displayAdditionalLyric = () => {
@@ -88,13 +225,9 @@ const App = () => {
   };
 
   const handleGuess = () => {
-    console.log('correct songs', correctSongs[correctSongs.length - 1]);
-    console.log('guess', guess.string);
-    console.log('correct lyrics', correctLyrics.lyrics);
-
-    if (guess.index === NUM_GUESSES) {
+    if (guess.index >= numGuesses - 1) {
       alert('You have reached the maximum number of guesses!');
-      if (IS_AUTO_REVEAL) {
+      if (isAutoReveal) {
         setIsAnswerRevealed(true);
       }
       return;
@@ -121,10 +254,6 @@ const App = () => {
     }, 2000);
   };
 
-  useEffect(() => {
-    getLyrics();
-  }, []);
-
   const toggleSheet = () => {
     setIsSheetOpen(!isSheetOpen);
   };
@@ -141,11 +270,12 @@ const App = () => {
   }, [isSettingsOpen]);
 
   useEffect(() => {
-    if (IS_AUTO_SHUFFLE && isAnswerRevealed) {
+    if (isAutoShuffle && isAnswerRevealed) {
       setTimeout(() => {
         getLyrics();
       }, 2500);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAnswerRevealed]);
 
   return (
@@ -157,72 +287,18 @@ const App = () => {
         id="border"
       />
       {/* Settings popover */}
-      <div
-        className={cn(
-          'fixed left-0 top-0 z-20 flex h-screen w-full items-center justify-center backdrop-blur-xl duration-500',
-          {
-            hidden: !isSettingsOpen,
-          },
-        )}
-      >
-        <div className="bg-apple-bg-accent border-apple-bg-hover no-scrollbar max-h-[400px] w-[30%] overflow-auto rounded-xl border p-6 shadow-md">
-          <div className="flex flex-row justify-between">
-            <h1 className="text-apple-text-main w-full text-3xl font-semibold">Settings</h1>
-            <span className="flex size-10 items-start justify-end pb-4 pl-4" onClick={() => setIsSettingsOpen(false)}>
-              <X className="text-apple-text-accent hover:bg-apple-bg-hover size-6 rounded duration-100" />
-            </span>
-          </div>
-
-          <div className="mt-4 flex flex-col items-start gap-2">
-            <div className="grid w-full grid-cols-2 items-center justify-between">
-              <p className="font-apple text-apple-text-main w-30">Max Lyrics</p>
-              <input
-                type="number"
-                max={20}
-                value={NUM_LYRICS}
-                onInput={(event) => setNUM_LYRICS(Number((event.target as HTMLInputElement).value))}
-                className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple rounded-md border border-opacity-50 px-1 outline-none"
-              />
-            </div>
-            <div className="grid w-full grid-cols-2 items-center justify-between">
-              <p className="font-apple text-apple-text-main w-30">Max Guesses</p>
-              <input
-                type="number"
-                max={20}
-                value={NUM_GUESSES}
-                onInput={(event) => setNUM_GUESSES(Number((event.target as HTMLInputElement).value))}
-                className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple rounded-md border border-opacity-50 px-1 outline-none"
-              />
-            </div>
-            <div className="grid w-full grid-cols-2 items-center justify-start">
-              <p className="font-apple text-apple-text-main w-30">Auto Shuffle</p>
-              <input
-                type="checkbox"
-                checked={IS_AUTO_SHUFFLE}
-                onChange={(event) => setIS_AUTO_SHUFFLE(event.target.checked)}
-                className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple rounded-md border border-opacity-50 px-1 outline-none"
-              />
-            </div>
-            <div className="grid w-full grid-cols-2 items-center justify-start">
-              <p className="font-apple text-apple-text-main w-30">Auto Reveal Answer</p>
-              <input
-                type="checkbox"
-                checked={IS_AUTO_REVEAL}
-                onChange={(event) => setIS_AUTO_REVEAL(event.target.checked)}
-                className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple rounded-md border border-opacity-50 px-1 outline-none"
-              />
-            </div>
-            <div className="flex w-full justify-end">
-              <button
-                className="bg-apple-red text-apple-text-main mt-4 h-fit cursor-pointer rounded-md px-3 py-1"
-                onClick={() => setIsSettingsOpen(false)}
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <SettingsPopover
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        numLyrics={numLyrics}
+        setNumLyrics={setNumLyrics}
+        numGuesses={numGuesses}
+        setNumGuesses={setNumGuesses}
+        isAutoShuffle={isAutoShuffle}
+        setIsAutoShuffle={setIsAutoShuffle}
+        isAutoReveal={isAutoReveal}
+        setIsAutoReveal={setIsAutoReveal}
+      />
       {/* Main content that will shrink when the sheet opens */}
       <div
         className={cn('px-24 pt-48 transition-all duration-300 ease-in-out', {
@@ -276,10 +352,10 @@ const App = () => {
                     type="text"
                     className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple w-full rounded-md border border-opacity-50 px-1 outline-none"
                     value={guess.string}
-                    onChange={(event) => handleInputChange(event)}
+                    onChange={handleInputChange}
                     onFocus={() => setIsInputFocused(true)}
                     onBlur={() => {
-                      setTimeout(() => setIsInputFocused(false), 200); // Delay hiding the dropdown
+                      setTimeout(() => setIsInputFocused(false), 200);
                     }}
                     onKeyDown={(event) => {
                       if (event.key === 'Enter') {
@@ -288,53 +364,47 @@ const App = () => {
                     }}
                     disabled={correctLyrics.index === -1}
                   />
-                  <div
-                    className={cn(
-                      'border-apple-bg-hover no-scrollbar absolute top-10 max-h-64 w-full overflow-auto rounded border bg-white duration-100',
-                      {
-                        hidden: !isInputFocused,
-                        'flex flex-col items-start justify-start': isInputFocused,
-                      },
-                    )}
-                  >
-                    {songs
-                      .filter((song) => song.title.toLowerCase().includes(guess.string.toLowerCase()))
-                      .map((song, index) => (
+                  {isInputFocused && (
+                    <div className="border-apple-bg-hover no-scrollbar absolute top-10 max-h-64 w-full overflow-auto rounded border bg-white duration-100">
+                      {songs
+                        .filter((song) => song.title.toLowerCase().includes(guess.string.toLowerCase()))
+                        .map((song, index) => (
+                          <div
+                            key={index}
+                            className={`hover:bg-apple-bg-hover flex w-full cursor-pointer items-start p-2 ${
+                              index % 2 === 0 ? 'bg-apple-bg-main' : 'bg-apple-bg-accent'
+                            }`}
+                            onClick={() => {
+                              setGuess({ string: song.title, index: guess.index }); // Update input value on song selection
+                              setIsInputFocused(false); // Close dropdown on selection
+                            }}
+                          >
+                            <img
+                              src={import.meta.env.BASE_URL + song.cover}
+                              alt={song.title}
+                              className="mr-2 h-10 w-10 rounded"
+                            />
+                            <div>
+                              <p className="text-apple-text-main font-bold">{song.title}</p>
+                              <p className="text-apple-text-accent text-sm">{song.artist}</p>
+                            </div>
+                          </div>
+                        ))}
+                      {songs.filter((song) => song.artist.toLowerCase().includes(guess.string.toLowerCase())).length ===
+                        0 && (
                         <div
-                          key={index}
-                          className={`hover:bg-apple-bg-hover flex w-full cursor-pointer items-start p-2 ${
-                            index % 2 === 0 ? 'bg-apple-bg-main' : 'bg-apple-bg-accent'
+                          className={`flex w-full items-center p-2 ${
+                            songs.length % 2 === 0 ? 'bg-apple-bg-main' : 'bg-apple-bg-accent'
                           }`}
                           onClick={() => {
-                            setGuess({ string: song.title, index: guess.index + 1 }); // Update input value on song selection
-                            setIsInputFocused(false); // Close dropdown on selection
+                            setIsInputFocused(false);
                           }}
                         >
-                          <img
-                            src={import.meta.env.BASE_URL + song.cover}
-                            alt={song.title}
-                            className="mr-2 h-10 w-10 rounded"
-                          />
-                          <div>
-                            <p className="text-apple-text-main font-bold">{song.title}</p>
-                            <p className="text-apple-text-accent text-sm">{song.artist}</p>
-                          </div>
+                          <p className="text-apple-text-accent text-sm">No Results.</p>
                         </div>
-                      ))}
-                    {songs.filter((song) => song.artist.toLowerCase().includes(guess.string.toLowerCase())).length ===
-                      0 && (
-                      <div
-                        className={`flex w-full items-center p-2 ${
-                          songs.length % 2 === 0 ? 'bg-apple-bg-main' : 'bg-apple-bg-accent'
-                        }`}
-                        onClick={() => {
-                          setIsInputFocused(false);
-                        }}
-                      >
-                        <p className="text-apple-text-accent text-sm">No Results. </p>
-                      </div>
-                    )}
-                  </div>
+                      )}
+                    </div>
+                  )}
                 </div>
                 <button
                   className="text-apple-text-main absolute right-[5px] flex h-full flex-row items-center gap-2 rounded-md"
@@ -349,57 +419,13 @@ const App = () => {
         </div>
       </div>
 
-      {/* Sheet that opens and shifts content */}
-      <div
-        className={cn('bg-apple-bg-lyrics border-apple-bg-hover border-l transition-all duration-300 ease-in-out', {
-          'w-[300px]': isSheetOpen,
-          'w-0': !isSheetOpen,
-        })}
-        id="Sheet"
-      >
-        <div className={cn('no-scrollbar fixed top-0 h-full overflow-auto p-3', { hidden: !isSheetOpen })}>
-          {/* Sheet content, only visible when sheet is open */}
-          {displayedLyrics.map((line, index) => (
-            <p
-              key={index}
-              className={cn(
-                'text-apple-text-accent hover:bg-apple-bg-hover hover:text-apple-text-main my-2 w-full rounded-xl p-3 text-2xl font-bold first:mt-12',
-                {
-                  'text-left': line.isLeft,
-                  'text-right text-lg': !line.isLeft,
-                  'text-green-500 opacity-60 hover:text-green-500':
-                    line.lyric &&
-                    correctSongs &&
-                    correctSongs[correctSongs.length - 1] &&
-                    line.lyric.toLowerCase() === correctSongs[correctSongs.length - 1].toLowerCase(),
-                  'animate-shake text-red-500 hover:text-red-500':
-                    !line.isLeft && line.lyric.toLowerCase() !== correctSongs[correctSongs.length - 1].toLowerCase(),
-                },
-              )}
-            >
-              {line.lyric}
-            </p>
-          ))}
-          {isAnswerRevealed && (
-            <div className="border-t-apple-bg-hover flex flex-row items-center border border-x-0 border-b-0 p-2">
-              <img
-                src={
-                  import.meta.env.BASE_URL +
-                  songs.find((song) => song.title === correctSongs[correctSongs.length - 1])?.cover
-                }
-                alt={correctSongs[correctSongs.length - 1]}
-                className="size-16 rounded"
-              />
-              <div className="ml-4 flex h-full flex-col justify-center">
-                <p className="text-apple-text-main text-xl font-semibold">{correctSongs[correctSongs.length - 1]}</p>
-                <p className="text-apple-text-accent text-xs">
-                  {songs.find((song) => song.title === correctSongs[correctSongs.length - 1])?.artist}
-                </p>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+      {/* Lyrics Sheet */}
+      <LyricsSheet
+        isOpen={isSheetOpen}
+        displayedLyrics={displayedLyrics}
+        isAnswerRevealed={isAnswerRevealed}
+        correctSong={correctSongs[correctSongs.length - 1]}
+      />
 
       {/* Button to toggle the sheet */}
       <div
@@ -455,12 +481,12 @@ const App = () => {
           <span className="text-apple-text-accent flex flex-row">
             <Lightbulb className="" />
             <p className="text-xl">
-              : {displayedLyrics.filter((line) => !line.isLeft).length}/{NUM_GUESSES}
+              : {displayedLyrics.filter((line) => !line.isLeft).length}/{numGuesses}
             </p>
           </span>
         </div>
         {(correctLyrics.index === correctLyrics.lyrics.length - 1 ||
-          NUM_GUESSES === displayedLyrics.filter((lyric) => lyric.isLeft).length) && (
+          numGuesses === displayedLyrics.filter((lyric) => lyric.isLeft).length) && (
           <div
             className={cn(
               'fixed top-[144px] duration-300',
