@@ -29,6 +29,8 @@ export const parseLyrics = (lyricsString: string): string[] => {
 const App = () => {
   const [NUM_LYRICS, setNUM_LYRICS] = useState(6);
   const [NUM_GUESSES, setNUM_GUESSES] = useState(6);
+  const [IS_AUTO_SHUFFLE, setIS_AUTO_SHUFFLE] = useState(true);
+  const [IS_AUTO_REVEAL, setIS_AUTO_REVEAL] = useState(true);
 
   const [isSheetOpen, setIsSheetOpen] = useState(true);
   const [isCelebrating, setIsCelebrating] = useState(false);
@@ -58,6 +60,7 @@ const App = () => {
     if (selectedSong.lyrics.length < NUM_LYRICS) {
       return getSong();
     }
+    console.log(selectedSong.lyrics);
     return selectedSong.lyrics;
   };
 
@@ -88,9 +91,12 @@ const App = () => {
     console.log('correct songs', correctSongs[correctSongs.length - 1]);
     console.log('guess', guess.string);
     console.log('correct lyrics', correctLyrics.lyrics);
+
     if (guess.index === NUM_GUESSES) {
       alert('You have reached the maximum number of guesses!');
-      setIsAnswerRevealed(true);
+      if (IS_AUTO_REVEAL) {
+        setIsAnswerRevealed(true);
+      }
       return;
     }
     displayAdditionalGuess();
@@ -129,8 +135,18 @@ const App = () => {
   };
 
   useEffect(() => {
-    getLyrics();
+    if (isSettingsOpen) {
+      getLyrics();
+    }
   }, [isSettingsOpen]);
+
+  useEffect(() => {
+    if (IS_AUTO_SHUFFLE && isAnswerRevealed) {
+      setTimeout(() => {
+        getLyrics();
+      }, 2500);
+    }
+  }, [isAnswerRevealed]);
 
   return (
     <div className="bg-apple-bg-main relative flex overflow-hidden">
@@ -149,7 +165,7 @@ const App = () => {
           },
         )}
       >
-        <div className="bg-apple-bg-accent border-apple-bg-hover no-scrollbar max-h-64 w-[30%] overflow-auto rounded-xl border p-6 shadow-md">
+        <div className="bg-apple-bg-accent border-apple-bg-hover no-scrollbar max-h-[400px] w-[30%] overflow-auto rounded-xl border p-6 shadow-md">
           <div className="flex flex-row justify-between">
             <h1 className="text-apple-text-main w-full text-3xl font-semibold">Settings</h1>
             <span className="flex size-10 items-start justify-end pb-4 pl-4" onClick={() => setIsSettingsOpen(false)}>
@@ -158,7 +174,7 @@ const App = () => {
           </div>
 
           <div className="mt-4 flex flex-col items-start gap-2">
-            <div className="flex w-full flex-row items-center justify-between">
+            <div className="grid w-full grid-cols-2 items-center justify-between">
               <p className="font-apple text-apple-text-main w-30">Max Lyrics</p>
               <input
                 type="number"
@@ -168,13 +184,31 @@ const App = () => {
                 className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple rounded-md border border-opacity-50 px-1 outline-none"
               />
             </div>
-            <div className="flex w-full flex-row items-center justify-between">
+            <div className="grid w-full grid-cols-2 items-center justify-between">
               <p className="font-apple text-apple-text-main w-30">Max Guesses</p>
               <input
                 type="number"
                 max={20}
                 value={NUM_GUESSES}
                 onInput={(event) => setNUM_GUESSES(Number((event.target as HTMLInputElement).value))}
+                className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple rounded-md border border-opacity-50 px-1 outline-none"
+              />
+            </div>
+            <div className="grid w-full grid-cols-2 items-center justify-start">
+              <p className="font-apple text-apple-text-main w-30">Auto Shuffle</p>
+              <input
+                type="checkbox"
+                checked={IS_AUTO_SHUFFLE}
+                onChange={(event) => setIS_AUTO_SHUFFLE(event.target.checked)}
+                className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple rounded-md border border-opacity-50 px-1 outline-none"
+              />
+            </div>
+            <div className="grid w-full grid-cols-2 items-center justify-start">
+              <p className="font-apple text-apple-text-main w-30">Auto Reveal Answer</p>
+              <input
+                type="checkbox"
+                checked={IS_AUTO_REVEAL}
+                onChange={(event) => setIS_AUTO_REVEAL(event.target.checked)}
                 className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple rounded-md border border-opacity-50 px-1 outline-none"
               />
             </div>
@@ -425,9 +459,9 @@ const App = () => {
             </p>
           </span>
         </div>
-        {correctLyrics.index === correctLyrics.lyrics.length - 1 && (
+        {(correctLyrics.index === correctLyrics.lyrics.length - 1 ||
+          NUM_GUESSES === displayedLyrics.filter((lyric) => lyric.isLeft).length) && (
           <div
-            id={'balls'}
             className={cn(
               'fixed top-[144px] duration-300',
               {
