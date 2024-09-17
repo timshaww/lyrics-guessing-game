@@ -6,7 +6,7 @@ const SongTable = () => {
   return (
     <div className="mb-12 overflow-x-auto">
       <table className="min-w-full table-auto">
-        <thead className="text-apple-text-accent text-sm">
+        <thead className="text-sm text-apple-text-accent">
           <tr>
             <th className="py-2 text-left font-semibold">Song</th>
             <th className="py-2 text-left font-semibold">Artist</th>
@@ -16,14 +16,14 @@ const SongTable = () => {
         </thead>
         <tbody>
           {songs.map((song, index) => (
-            <tr key={index} className="odd:bg-apple-bg-accent hover:bg-apple-bg-hover rounded-md even:bg-inherit">
-              <td className="text-apple-text-main flex items-center p-2 text-sm">
+            <tr key={index} className="rounded-md odd:bg-apple-bg-accent even:bg-inherit hover:bg-apple-bg-hover">
+              <td className="flex items-center p-2 text-sm text-apple-text-main">
                 <img src={song.cover} alt={song.title} className="mr-4 h-10 w-10 rounded" />
                 {song.title}
               </td>
-              <td className="text-apple-text-accent text-sm">{song.artist}</td>
-              <td className="text-apple-text-accent items-center text-sm sm:hidden md:table-cell">{song.album}</td>
-              <td className="text-apple-text-accent text-sm">{song.time}</td>
+              <td className="text-sm text-apple-text-accent">{song.artist}</td>
+              <td className="items-center text-sm text-apple-text-accent sm:hidden md:table-cell">{song.album}</td>
+              <td className="text-sm text-apple-text-accent">{song.time}</td>
             </tr>
           ))}
         </tbody>

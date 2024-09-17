@@ -47,56 +47,56 @@ const SettingsPopover = ({
         },
       )}
     >
-      <div className="bg-apple-bg-accent border-apple-bg-hover no-scrollbar max-h-[400px] w-[30%] overflow-auto rounded-xl border p-6 shadow-md">
+      <div className="no-scrollbar max-h-[400px] w-[30%] overflow-auto rounded-xl border border-apple-bg-hover bg-apple-bg-accent p-6 shadow-md">
         <div className="flex flex-row justify-between">
-          <h1 className="text-apple-text-main w-full text-3xl font-semibold">Settings</h1>
+          <h1 className="w-full text-3xl font-semibold text-apple-text-main">Settings</h1>
           <span className="flex size-10 items-start justify-end pb-4 pl-4" onClick={onClose}>
-            <X className="text-apple-text-accent hover:bg-apple-bg-hover size-6 rounded duration-100" />
+            <X className="size-6 rounded text-apple-text-accent duration-100 hover:bg-apple-bg-hover" />
           </span>
         </div>
 
         <div className="mt-4 flex flex-col items-start gap-2">
           <div className="grid w-full grid-cols-2 items-center justify-between">
-            <p className="font-apple text-apple-text-main w-30">Max Lyrics</p>
+            <p className="w-30 font-apple text-apple-text-main">Max Lyrics</p>
             <input
               type="number"
               max={20}
               value={numLyrics}
               onChange={(event) => setNumLyrics(Number(event.target.value))}
-              className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple rounded-md border border-opacity-50 px-1 outline-none"
+              className="rounded-md border border-apple-text-accent border-opacity-50 bg-apple-bg-accent px-1 font-apple text-apple-text-main outline-none"
             />
           </div>
           <div className="grid w-full grid-cols-2 items-center justify-between">
-            <p className="font-apple text-apple-text-main w-30">Max Guesses</p>
+            <p className="w-30 font-apple text-apple-text-main">Max Guesses</p>
             <input
               type="number"
               max={20}
               value={numGuesses}
               onChange={(event) => setNumGuesses(Number(event.target.value))}
-              className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple rounded-md border border-opacity-50 px-1 outline-none"
+              className="rounded-md border border-apple-text-accent border-opacity-50 bg-apple-bg-accent px-1 font-apple text-apple-text-main outline-none"
             />
           </div>
           <div className="grid w-full grid-cols-2 items-center justify-start">
-            <p className="font-apple text-apple-text-main w-30">Auto Shuffle</p>
+            <p className="w-30 font-apple text-apple-text-main">Auto Shuffle</p>
             <input
               type="checkbox"
               checked={isAutoShuffle}
               onChange={(event) => setIsAutoShuffle(event.target.checked)}
-              className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple rounded-md border border-opacity-50 px-1 outline-none"
+              className="rounded-md border border-apple-text-accent border-opacity-50 bg-apple-bg-accent px-1 font-apple text-apple-text-main outline-none"
             />
           </div>
           <div className="grid w-full grid-cols-2 items-center justify-start">
-            <p className="font-apple text-apple-text-main w-30">Auto Reveal Answer</p>
+            <p className="w-30 font-apple text-apple-text-main">Auto Reveal Answer</p>
             <input
               type="checkbox"
               checked={isAutoReveal}
               onChange={(event) => setIsAutoReveal(event.target.checked)}
-              className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple rounded-md border border-opacity-50 px-1 outline-none"
+              className="rounded-md border border-apple-text-accent border-opacity-50 bg-apple-bg-accent px-1 font-apple text-apple-text-main outline-none"
             />
           </div>
           <div className="flex w-full justify-end">
             <button
-              className="bg-apple-red text-apple-text-main mt-4 h-fit cursor-pointer rounded-md px-3 py-1"
+              className="mt-4 h-fit cursor-pointer rounded-md bg-apple-red px-3 py-1 text-apple-text-main"
               onClick={onClose}
             >
               Save
@@ -118,7 +118,7 @@ interface LyricSheetProps {
 const LyricsSheet = ({ isOpen, displayedLyrics, isAnswerRevealed, correctSong }: LyricSheetProps) => {
   return (
     <div
-      className={cn('bg-apple-bg-lyrics border-apple-bg-hover border-l transition-all duration-300 ease-in-out', {
+      className={cn('border-l border-apple-bg-hover bg-apple-bg-lyrics transition-all duration-300 ease-in-out', {
         'w-[300px]': isOpen,
         'w-0': !isOpen,
       })}
@@ -133,7 +133,7 @@ const LyricsSheet = ({ isOpen, displayedLyrics, isAnswerRevealed, correctSong }:
           <AnimatedText
             key={index}
             text={line.lyric}
-            className={cn('hover:bg-apple-bg-hover my-2 w-full rounded-xl p-3 text-2xl font-bold first:mt-12', {
+            className={cn('my-2 w-full rounded-xl p-3 text-2xl font-bold first:mt-12 hover:bg-apple-bg-hover', {
               'animated-line text-left': line.isLeft,
               'text-right text-lg': !line.isLeft,
               'animate-shake text-red-500 hover:text-red-500':
@@ -143,15 +143,15 @@ const LyricsSheet = ({ isOpen, displayedLyrics, isAnswerRevealed, correctSong }:
           />
         ))}
         {isAnswerRevealed && correctSong && (
-          <div className="border-t-apple-bg-hover flex flex-row items-center border border-x-0 border-b-0 p-2">
+          <div className="flex flex-row items-center border border-x-0 border-b-0 border-t-apple-bg-hover p-2">
             <img
               src={import.meta.env.BASE_URL + songs.find((song) => song.title === correctSong)?.cover}
               alt={correctSong}
               className="size-16 rounded"
             />
             <div className="ml-4 flex h-full flex-col justify-center">
-              <p className="text-apple-text-main text-xl font-semibold">{correctSong}</p>
-              <p className="text-apple-text-accent text-xs">
+              <p className="text-xl font-semibold text-apple-text-main">{correctSong}</p>
+              <p className="text-xs text-apple-text-accent">
                 {songs.find((song) => song.title === correctSong)?.artist}
               </p>
             </div>
@@ -304,7 +304,7 @@ const App = () => {
   }, [isAnswerRevealed]);
 
   return (
-    <div className="bg-apple-bg-main relative flex overflow-hidden">
+    <div className="relative flex overflow-hidden bg-apple-bg-main">
       {isCelebrating && <div className={cn('pulsing-glow-border fixed left-0 top-0 h-screen w-full')} id="border" />}
       {/* Settings popover */}
       <SettingsPopover
@@ -327,7 +327,7 @@ const App = () => {
         })}
       >
         <div
-          className="bg-apple-bg-main max-w-screen-3xl no-scrollbar h-full"
+          className="max-w-screen-3xl no-scrollbar h-full bg-apple-bg-main"
           onKeyDown={(event) => {
             if (event.key === 'Enter') {
               handleGuess();
@@ -340,11 +340,11 @@ const App = () => {
               alt="AppleMusicHeading"
               className="h-40 md:h-60"
             />
-            <div className="font-apple flex h-[240px] w-full flex-col justify-between">
+            <div className="flex h-[240px] w-full flex-col justify-between font-apple">
               <div className="flex h-full flex-col justify-center">
-                <h1 className="text-apple-text-main text-3xl font-semibold md:text-5xl">Guess the 2010's Song</h1>
-                <h2 className="text-apple-red text-2xl font-normal md:text-3xl">Tim Shaw's Hits</h2>
-                <p className="text-apple-text-accent text-md h-12 overflow-hidden">
+                <h1 className="text-3xl font-semibold text-apple-text-main md:text-5xl">Guess the 2010's Song</h1>
+                <h2 className="text-2xl font-normal text-apple-red md:text-3xl">Tim Shaw's Hits</h2>
+                <p className="text-md h-12 overflow-hidden text-apple-text-accent">
                   Can you guess the song from the lyrics?
                   <br /> Click Play to add a lyric. Click Shuffle to get a new song. Submit your guesses by clicking the
                   arrow!
@@ -352,7 +352,7 @@ const App = () => {
               </div>
               <div className="relative flex w-full flex-row gap-4">
                 <button
-                  className="bg-apple-red text-apple-text-main h-fit w-[116px] cursor-pointer rounded-md px-6 py-1"
+                  className="h-fit w-[116px] cursor-pointer rounded-md bg-apple-red px-6 py-1 text-apple-text-main"
                   onClick={handlePlay}
                 >
                   <div className="flex flex-row items-center justify-center gap-2">
@@ -361,7 +361,7 @@ const App = () => {
                   </div>
                 </button>
                 <button
-                  className="bg-apple-red text-apple-text-main flex h-fit w-[116px] flex-row items-center gap-2 rounded-md px-6 py-1"
+                  className="flex h-fit w-[116px] flex-row items-center gap-2 rounded-md bg-apple-red px-6 py-1 text-apple-text-main"
                   onClick={getLyrics}
                 >
                   <FaShuffle className="size-3" />
@@ -370,7 +370,7 @@ const App = () => {
                 <div className="relative w-full">
                   <input
                     type="text"
-                    className="bg-apple-bg-accent border-apple-text-accent text-apple-text-main font-apple h-full w-full rounded-md border border-opacity-50 px-1 outline-none"
+                    className="h-full w-full rounded-md border border-apple-text-accent border-opacity-50 bg-apple-bg-accent px-1 font-apple text-apple-text-main outline-none"
                     value={guess.string}
                     onChange={handleInputChange}
                     onFocus={() => setIsInputFocused(true)}
@@ -385,13 +385,13 @@ const App = () => {
                     disabled={correctLyrics.index === -1}
                   />
                   {isInputFocused && (
-                    <div className="border-apple-bg-hover no-scrollbar absolute top-10 max-h-64 w-full overflow-auto rounded border bg-white duration-100">
+                    <div className="no-scrollbar absolute top-10 max-h-64 w-full overflow-auto rounded border border-apple-bg-hover bg-white duration-100">
                       {songs
                         .filter((song) => song.title.toLowerCase().includes(guess.string.toLowerCase()))
                         .map((song, index) => (
                           <div
                             key={index}
-                            className={`hover:bg-apple-bg-hover flex w-full cursor-pointer items-start p-2 ${
+                            className={`flex w-full cursor-pointer items-start p-2 hover:bg-apple-bg-hover ${
                               index % 2 === 0 ? 'bg-apple-bg-main' : 'bg-apple-bg-accent'
                             }`}
                             onClick={() => {
@@ -405,8 +405,8 @@ const App = () => {
                               className="mr-2 h-10 w-10 rounded"
                             />
                             <div>
-                              <p className="text-apple-text-main font-bold">{song.title}</p>
-                              <p className="text-apple-text-accent text-sm">{song.artist}</p>
+                              <p className="font-bold text-apple-text-main">{song.title}</p>
+                              <p className="text-sm text-apple-text-accent">{song.artist}</p>
                             </div>
                           </div>
                         ))}
@@ -420,14 +420,14 @@ const App = () => {
                             setIsInputFocused(false);
                           }}
                         >
-                          <p className="text-apple-text-accent text-sm">No Results.</p>
+                          <p className="text-sm text-apple-text-accent">No Results.</p>
                         </div>
                       )}
                     </div>
                   )}
                 </div>
                 <button
-                  className="text-apple-text-main absolute right-[5px] flex h-full flex-row items-center gap-2 rounded-md"
+                  className="absolute right-[5px] flex h-full flex-row items-center gap-2 rounded-md text-apple-text-main"
                   onClick={handleGuess}
                 >
                   <HiMiniArrowRightCircle className="size-5" />
@@ -464,7 +464,7 @@ const App = () => {
           <img
             src={import.meta.env.BASE_URL + '/LyricIcon.png'}
             alt="Lyrics"
-            className={cn('hover:bg-apple-bg-hover size-10 rounded p-2')}
+            className={cn('size-10 rounded p-2 hover:bg-apple-bg-hover')}
           />
         </button>
         <div
@@ -479,7 +479,7 @@ const App = () => {
             },
           )}
         >
-          <span className="text-apple-text-accent flex flex-row">
+          <span className="flex flex-row text-apple-text-accent">
             <Music className="" />
             <p className="text-xl">
               : {correctLyrics.index + 1}/{correctLyrics.lyrics.length}
@@ -498,7 +498,7 @@ const App = () => {
             },
           )}
         >
-          <span className="text-apple-text-accent flex flex-row">
+          <span className="flex flex-row text-apple-text-accent">
             <Lightbulb className="" />
             <p className="text-xl">
               : {displayedLyrics.filter((line) => !line.isLeft).length}/{numGuesses}
@@ -520,7 +520,7 @@ const App = () => {
             )}
             onClick={() => setIsAnswerRevealed(!isAnswerRevealed)}
           >
-            <Sparkles className="text-apple-text-accent hover:bg-apple-bg-hover size-10 rounded p-2" />
+            <Sparkles className="size-10 rounded p-2 text-apple-text-accent hover:bg-apple-bg-hover" />
           </div>
         )}
         <div
@@ -528,7 +528,7 @@ const App = () => {
           className={cn('fixed bottom-3 left-3 duration-300')}
           onClick={() => setIsSettingsOpen(!isSettingsOpen)}
         >
-          <Settings className="text-apple-text-accent hover:bg-apple-bg-hover size-10 rounded p-2" />
+          <Settings className="size-10 rounded p-2 text-apple-text-accent hover:bg-apple-bg-hover" />
         </div>
       </div>
     </div>
