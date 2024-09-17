@@ -26,6 +26,21 @@ export const parseLyrics = (lyricsString: string): string[] => {
   return lyricsString.split(/\r?\n/).filter((line) => line.trim() !== '');
 };
 
+interface SettingsPopoverProps {
+  isOpen: boolean;
+  onClose: () => void;
+  numLyrics: number;
+  setNumLyrics: (num: number) => void;
+  numGuesses: number;
+  setNumGuesses: (num: number) => void;
+  isAutoShuffle: boolean;
+  setIsAutoShuffle: (isAutoShuffle: boolean) => void;
+  isAutoReveal: boolean;
+  setIsAutoReveal: (isAutoReveal: boolean) => void;
+  isHardMode: boolean;
+  setIsHardMode: (isHardMode: boolean) => void;
+}
+
 const SettingsPopover = ({
   isOpen,
   onClose,
@@ -37,7 +52,9 @@ const SettingsPopover = ({
   setIsAutoShuffle,
   isAutoReveal,
   setIsAutoReveal,
-}: any) => {
+  isHardMode,
+  setIsHardMode,
+}: SettingsPopoverProps) => {
   return (
     <div
       className={cn(
@@ -91,6 +108,15 @@ const SettingsPopover = ({
               type="checkbox"
               checked={isAutoReveal}
               onChange={(event) => setIsAutoReveal(event.target.checked)}
+              className="rounded-md border border-apple-text-accent border-opacity-50 bg-apple-bg-accent px-1 font-apple text-apple-text-main outline-none"
+            />
+          </div>
+          <div className="grid w-full grid-cols-2 items-center justify-start">
+            <p className="w-30 font-apple text-apple-text-main">Hard Mode</p>
+            <input
+              type="checkbox"
+              checked={isHardMode}
+              onChange={(event) => setIsHardMode(event.target.checked)}
               className="rounded-md border border-apple-text-accent border-opacity-50 bg-apple-bg-accent px-1 font-apple text-apple-text-main outline-none"
             />
           </div>
@@ -186,6 +212,7 @@ const App = () => {
   const [numGuesses, setNumGuesses] = useState(6);
   const [isAutoShuffle, setIsAutoShuffle] = useState(false);
   const [isAutoReveal, setIsAutoReveal] = useState(true);
+  const [isHardMode, setIsHardMode] = useState(false);
 
   const [isSheetOpen, setIsSheetOpen] = useState(true);
   const [isCelebrating, setIsCelebrating] = useState(false);
@@ -318,6 +345,8 @@ const App = () => {
         setIsAutoShuffle={setIsAutoShuffle}
         isAutoReveal={isAutoReveal}
         setIsAutoReveal={setIsAutoReveal}
+        isHardMode={isHardMode}
+        setIsHardMode={setIsHardMode}
       />
       {/* Main content that will shrink when the sheet opens */}
       <div
@@ -384,7 +413,7 @@ const App = () => {
                     }}
                     disabled={correctLyrics.index === -1}
                   />
-                  {isInputFocused && (
+                  {isInputFocused && !isHardMode && (
                     <div className="no-scrollbar absolute top-10 max-h-64 w-full overflow-auto rounded border border-apple-bg-hover bg-white duration-100">
                       {songs
                         .filter((song) => song.title.toLowerCase().includes(guess.string.toLowerCase()))
